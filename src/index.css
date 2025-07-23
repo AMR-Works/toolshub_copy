@@ -1,0 +1,183 @@
+/* Import landing page styles */
+@import './styles/landing.css';
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Light mode - white background, black text, orange accents */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+
+    --primary: 25 95% 53%; /* Orange */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 20%;
+
+    --accent: 25 95% 53%; /* Orange */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 25 95% 53%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 25 95% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 95%;
+    --sidebar-accent-foreground: 0 0% 15%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 25 95% 53%;
+  }
+
+
+
+.glow-effect {
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px hsl(25, 95%, 53%), 0 0 10px hsl(25, 95%, 53%), 0 0 15px hsl(25, 95%, 53%);
+  }
+  to {
+    box-shadow: 0 0 10px hsl(25, 95%, 53%), 0 0 20px hsl(25, 95%, 53%), 0 0 30px hsl(25, 95%, 53%);
+  }
+}
+
+  .dark {
+    /* Dark mode - black background, blue/white text, orange accents */
+    --background: 222 84% 5%; /* Deep dark blue */
+    --foreground: 0 0% 100%; /* White text */
+
+    --card: 222 84% 5%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 222 84% 5%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 25 95% 53%; /* Orange */
+    --primary-foreground: 0 0% 0%;
+
+    --secondary: 217 33% 17%; /* Dark blue-gray */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 217 10% 65%;
+
+    --accent: 25 95% 53%; /* Orange */
+    --accent-foreground: 0 0% 0%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 25 95% 53%;
+
+    --sidebar-background: 222 84% 5%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 25 95% 53%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 25 95% 53%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  /* Hide browser's native password toggle icons */
+  input[type="password"]::-webkit-credentials-auto-fill-button,
+  input[type="password"]::-webkit-contacts-auto-fill-button,
+  input[type="password"]::-webkit-textfield-decoration-container {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    right: -9999px;
+    position: absolute;
+  }
+}
+
+/* Additional utility classes */
+.glass {
+  background-color: hsla(var(--background), 0.8);
+  backdrop-filter: blur(12px);
+}
+
+.hover-lift {
+  transition: transform 300ms;
+}
+
+.card-shadow {
+  box-shadow: 0 10px 15px -3px rgba(var(--primary), 0.1);
+}
+
+/* Animation classes */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+/* Bubble animation */
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(106, 91, 255, 0.2);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}

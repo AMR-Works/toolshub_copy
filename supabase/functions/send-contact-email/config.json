@@ -1,0 +1,8 @@
+{
+  "declarations": [
+    {
+      "name": "RESEND_API_KEY",
+      "type": "secret"
+    }
+  ]
+}
