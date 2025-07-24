@@ -1,5 +1,5 @@
-import React, { ReactNode, useEffect } from 'react';
-import { Link, useParams, Navigate, useLocation } from 'react-router-dom';
+import React, { ReactNode } from 'react';
+import { Link, useParams, Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
@@ -508,27 +508,16 @@ function getToolDescription(tool: string): string {
 export const ToolsPage = () => {
   const { slug } = useParams();
   const { user, profile } = useAuth();
-  const location = useLocation();
-
-  // Scroll to top whenever the slug changes
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [slug]);
 
   const handleToolClick = (e: React.MouseEvent, tool: string) => {
-
     if (!user) {
-      e.preventDefault();
-      toast.dismiss();
-      toast.error('Please sign in to access this tool', {
-        style: {
-          background: '#dc2626', // red-600
-          color: 'white',
-        },
-      });
-      return;
-    }
-
+        e.preventDefault();
+        toast.dismiss();
+        toast.error('Please sign in to access this tool', {
+          className: 'bg-red-500 text-white',
+        });
+        return;
+      }
 
     const premiumTools = [
       'tax-calculator',
@@ -567,8 +556,7 @@ export const ToolsPage = () => {
 
     if (premiumTools.includes(tool) && !profile?.is_premium) {
       e.preventDefault();
-      toast.dismiss();
-      toast.error('Upgrade to premium to access this tool', { className: 'bg-red-500 text-white' });
+      toast.error('Upgrade to premium to access this tool');
       setTimeout(() => {
         window.location.href = '/pricing';
       });
