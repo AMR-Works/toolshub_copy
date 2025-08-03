@@ -27,6 +27,14 @@ const ProfilePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Check for successful payment
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('success') === 'true') {
+      toast.success('Payment successful! Welcome to Premium!');
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
     if (!profile && !loading) {
       navigate('/auth');
     }

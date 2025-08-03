@@ -9,7 +9,7 @@ import { toast } from 'sonner';
 import { countries } from '@/components/CountrySelector';
 import type { CountryData } from '@/components/CountrySelector';
 import React, { useState, useEffect, useMemo } from 'react';
-import { useRazorpay } from '@/hooks/useRazorpay';
+import { usePolar } from '@/hooks/usePolar';
 
 const CountrySelector = React.lazy(() => import('@/components/CountrySelector').then(module => ({
   default: module.CountrySelector
@@ -67,7 +67,7 @@ import { useAuth } from '@/contexts/AuthContext';
 const PricingPage = () => {
   const { isPremium } = usePremium();
   const { user, profile } = useAuth();
-  const { openCheckout, loading } = useRazorpay();
+  const { openCheckout, loading } = usePolar();
   const navigate = useNavigate();
 
   const [isAnnual, setIsAnnual] = useState(false);
@@ -100,12 +100,11 @@ const PricingPage = () => {
     }
 
     setProcessingPayment(true);
-    const amount = isAnnual ? plan.price.annual : plan.price.monthly;
+    const priceId = isAnnual ? 'price_annual_pro' : 'price_monthly_pro';
     
     try {
       await openCheckout(
-        amount,
-        countryData.currency,
+        priceId,
         () => {
           toast.success("Payment successful! Welcome to Premium!");
           navigate('/profile');

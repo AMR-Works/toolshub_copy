@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Check, Star, Crown, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useRazorpay } from "@/hooks/useRazorpay";
+import { usePolar } from "@/hooks/usePolar";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePremium } from "@/hooks/usePremium";
 import { useNavigate } from "react-router-dom";
@@ -55,7 +55,7 @@ const getPlansForCountry = (countryData: CountryData) => {
 export const PricingSection = () => {
   const [isAnnual, setIsAnnual] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState('US');
-  const { openCheckout, loading } = useRazorpay();
+  const { openCheckout, loading } = usePolar();
   const { user } = useAuth();
   const { isPremium } = usePremium();
   const navigate = useNavigate();
@@ -78,8 +78,18 @@ export const PricingSection = () => {
       return;
     }
 
-    // Navigate to premium page for Pro plan
-    navigate('/premium');
+    // Use Polar.sh checkout with price ID
+    const priceId = isAnnual ? 'price_annual_pro' : 'price_monthly_pro';
+    await openCheckout(
+      priceId,
+      () => {
+        toast.success("Welcome to Premium!");
+        navigate('/profile');
+      },
+      (error) => {
+        toast.error(`Payment failed: ${error}`);
+      }
+    );
   };
 
   const getButtonText = (plan: any) => {
